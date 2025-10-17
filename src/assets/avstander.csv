@@ -1,0 +1,22 @@
+fra,til,avstand
+Meieri,Brød,4
+Meieri,Frukt og grønt,6
+Meieri,Snacks,8
+Meieri,Frossenmat,7
+Meieri,Drikke,5
+Meieri,Husholdning,10
+Brød,Frukt og grønt,3
+Brød,Snacks,5
+Brød,Frossenmat,6
+Brød,Drikke,4
+Brød,Husholdning,9
+Frukt og grønt,Snacks,4
+Frukt og grønt,Frossenmat,5
+Frukt og grønt,Drikke,6
+Frukt og grønt,Husholdning,8
+Snacks,Frossenmat,3
+Snacks,Drikke,2
+Snacks,Husholdning,7
+Frossenmat,Drikke,4
+Frossenmat,Husholdning,6
+Drikke,Husholdning,5
