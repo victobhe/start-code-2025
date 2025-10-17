@@ -1,0 +1,73 @@
+header{
+    background-color: #1b5794;
+    padding: 20px;
+    text-align: center;
+    border-radius: 2%;
+    
+}
+
+
+#dobbel-kant {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 60px;
+  color: rgb(0, 0, 255); /* selve tekstfargen, f.eks. REMA sin røde */
+  
+  /* Indre lys (hvit) kant */
+  -webkit-text-stroke: 1px white;
+
+  /* Ytre mørk (blå) kant via shadow lag */
+  text-shadow:
+    -2px -2px 0 rgb(128, 0, 0),
+     2px -2px 0 rgb(128, 0, 0),
+    -2px  2px 0 rgb(128, 0, 0),
+     2px  2px 0 rgb(128, 0, 0);
+}
+#enkel-kant {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  
+  
+ 
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    align-items: center;
+    text-align: center;
+}
+.container-handleliste {
+    margin-top: 20px;
+    text-align: center;
+}
+.containersubmit {
+    margin-top: 20px;
+}
+
+/* Stil for papirlapp-effekt */
+.papirlapp {
+ background-color: #fdfdfd;            
+  padding: 2rem;
+  width: 300px;
+  margin: 2rem auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15), inset 0 0 0 1px #eee;      
+  font-family: 'Arial', sans-serif;
+  position: relative;
+}
+
+
+.papirlapp h2, .papirlapp ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+.papirlapp li {
+  font-family: 'Comic Sans MS', cursive;  
+  font-size: 1.1rem;
+  margin: 0.4rem 0;
+}

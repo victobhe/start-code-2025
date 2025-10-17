@@ -6,18 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>start-code-2025</title>
     <script src="/src/components/djikstras.js"></script>
+    <link rel="stylesheet" href="src/styles/rema.css">
   </head>
   <body>
+    <header>
+      <h1 id="dobbel-kant">Velkommen</h1>
+      <h4 id="enkel-kant">Lurer du på hvor noe er i butikken? Søk opp, legg tili handlelista så gir vi deg kjappeste vei gjennom butikken</h4>
+      <img src="/src/assets/bilder/image.png" alt="">
+    </header>
+    <div><p></p></div>
     <div id="app">
       <!-- Application content will be rendered here -->
        <!--starting with input field, button  and connecting them to the javascript-->
         <input type="search" name="searchbar" id="searchbar" placeholder="Legg til i handleliste...">
             <!--"vare" som nå ligger inne er en placeholder for varen som blir lagt til fra sækefeltet-->
         <button id="leggtil" onclick="leggTilStederViMaInnom()">Legg til</button>
+        
+        <!--selve handlelista-->
+        <section class="papirlapp">
+          <h2>Handleliste</h2>
+            <ul>
+              <li>Brød</li>
+              <li>Melk</li>
+              <li>Snacks</li>
+            </ul>
+        </section>
+        
+        <!--Her er en knapp som skal trykkes påav bruker når handleliste er ferdig og beregniger skal skje, bruker tar da til en kart.html for bilde av kartet-->
+        <div class="container-submit">
+          <button type="submit">Til verks!</button>
 
+        </div>
 
-
-    </div>
-    <script type="module" src="/src/main.js"></script>
+      </div>
+      <script type="module" src="/src/main.js"></script>
+      <footer></footer>
   </body>
 </html>
