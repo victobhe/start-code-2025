@@ -5,9 +5,19 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>start-code-2025</title>
+    <script src="/src/components/djikstras.js"></script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- Application content will be rendered here -->
+       <!--starting with input field, button  and connecting them to the javascript-->
+        <input type="search" name="searchbar" id="searchbar" placeholder="Legg til i handleliste...">
+            <!--"vare" som nå ligger inne er en placeholder for varen som blir lagt til fra sækefeltet-->
+        <button id="leggtil" onclick="leggTilStederViMaInnom(), leggTilVareIFil(vare) ">Legg til</button>
+
+
+
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
