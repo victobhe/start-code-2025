@@ -15,3 +15,13 @@ Vi tenker å lage dette i html + js, siden alle på gruppen er familiær med det
 - Vite for oppsett
 - HTML, CSS og JS for en enkel prototype
 - Leaflet.js for kartet
+
+## Server
+for å fikse server, så må man kjøre disse kommandoene
+*
+cd backend
+npm init -y
+npm i express
+*
+Man kjører deretter serveren med
+*npm start*
