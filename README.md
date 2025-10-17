@@ -25,3 +25,10 @@ npm i express
 *
 Man kjører deretter serveren med
 *npm start*
+
+## Veien videre
+Denne applikasjonen er ei ferdig eller perfekt. Hadde vi hatt 2 månder til kunne vi sett for oss å tilføye:
+- En ordentilg backend
+- Et enda mer detaljert kart
+- Vakkrere CSS
+- Hadde vært gøy å vite hvordan systemet til rema 1000 (typ hvordan butikkene har kontroll på hvor varer i butikken er plassert) er slik at vi kunne fått et innblikk i hvor krevende det ville vært å implementere produktet vårt 
