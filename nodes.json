@@ -1,0 +1,27 @@
+[
+  { "id": "B1", "x": 88, "y": 400, "type": "path" },
+  { "id": "B2", "x": 88, "y": 621, "type": "path" },
+  { "id": "B3", "x": 291, "y": 400, "type": "path" },
+  { "id": "B4", "x": 291, "y": 561, "type": "path" },
+  { "id": "B5", "x": 291, "y": 706, "type": "path" },
+  { "id": "B6", "x": 657, "y": 400, "type": "path" },
+  { "id": "B7", "x": 657, "y": 561, "type": "path" },
+  { "id": "B8", "x": 657, "y": 706, "type": "path" },
+  { "id": "B9", "x": 771, "y": 31, "type": "path" },
+  { "id": "B10", "x": 771, "y": 211, "type": "path" },
+  { "id": "B11", "x": 938, "y": 211, "type": "path" },
+  { "id": "B12", "x": 938, "y": 706, "type": "path" },
+  { "id": "B13", "x": 1111, "y": 31, "type": "path" },
+  { "id": "B14", "x": 1111, "y": 271, "type": "path" },
+  { "id": "B15", "x": 1111, "y": 706, "type": "path" },
+
+  { "id": "C1", "x": 1028, "y": 501, "type": "category", "label": "baking" },
+  { "id": "C2", "x": 938, "y": 91, "type": "category", "label": "brød" },
+  { "id": "C3", "x": 853, "y": 501, "type": "category", "label": "kjøtt" },
+  { "id": "C4", "x": 657, "y": 151, "type": "category", "label": "snacks" },
+  { "id": "C5", "x": 497, "y": 490, "type": "category", "label": "frukt" },
+  { "id": "C6", "x": 497, "y": 631, "type": "category", "label": "grønt" },
+  { "id": "C7", "x": 231, "y": 612, "type": "category", "label": "annet" },
+
+  { "id": "R1", "x": 527, "y": 151, "type": "checkout", "label": "cashier" }
+]
