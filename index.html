@@ -25,5 +25,18 @@
 
   <canvas id="map" width="1200" height="750"></canvas>
   <script src="app.js"></script>
-</body>
+
+
+    <div id="app">
+      <!-- Application content will be rendered here -->
+       <!--starting with input field, button  and connecting them to the javascript-->
+        <input type="search" name="searchbar" id="searchbar" placeholder="Legg til i handleliste...">
+            <!--"vare" som nå ligger inne er en placeholder for varen som blir lagt til fra sækefeltet-->
+        <button id="leggtil" onclick="leggTilStederViMaInnom(), leggTilVareIFil(vare) ">Legg til</button>
+
+
+
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
