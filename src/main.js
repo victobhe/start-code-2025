@@ -2,7 +2,8 @@ import './style.css'
 import javascriptLogo from './javascript.svg'
 import viteLogo from '/vite.svg'
 import { setupCounter } from './counter.js'
-import { products } from '../backend/demofile.json'
+// Fix: Import the entire JSON file as default import
+import productsData from '../backend/demofile.json'
 
 // Legg til HTML for søkefelt og resultater
 document.querySelector('#app').innerHTML = `
@@ -41,7 +42,8 @@ searchInput.addEventListener('input', () => {
 
   if (!query) return
 
-  const results = products.filter(p =>
+  // Use productsData instead of products
+  const results = productsData.filter(p =>
     p.name.toLowerCase().includes(query)
   )
 
