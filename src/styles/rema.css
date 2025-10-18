@@ -1,0 +1,166 @@
+header{
+    background-color: #1b5794;
+    padding: 20px;
+    text-align: center;
+    border-radius: 2%;
+    
+}
+
+
+#dobbel-kant {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 60px;
+  color: rgb(0, 0, 255); /* selve tekstfargen, f.eks. REMA sin røde */
+  
+  /* Indre lys (hvit) kant */
+  -webkit-text-stroke: 1px white;
+
+  /* Ytre mørk (blå) kant via shadow lag */
+  text-shadow:
+    -2px -2px 0 rgb(128, 0, 0),
+     2px -2px 0 rgb(128, 0, 0),
+    -2px  2px 0 rgb(128, 0, 0),
+     2px  2px 0 rgb(128, 0, 0);
+}
+#enkel-kant {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  
+  
+ 
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    align-items: center;
+    text-align: center;
+}
+.container-handleliste {
+    margin-top: 20px;
+    text-align: center;
+}
+.container-submit {
+    margin-top: 10px;
+}
+
+/* Stil for papirlapp-effekt */
+.papirlapp {
+ background-color: #fdfdfd;            
+  padding: 2rem;
+  width: 300px;
+  margin: 2rem auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15), inset 0 0 0 1px #eee;      
+  font-family: 'Arial', sans-serif;
+  position: relative;
+}
+
+
+.papirlapp h2, .papirlapp ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+.papirlapp li {
+  font-family: 'Comic Sans MS', cursive;  
+  font-size: 1.1rem;
+  margin: 0.4rem 0;
+}
+
+.papirlapp {
+  background-color: #fdfdfd;
+  padding: 2rem;
+  width: 320px;
+  margin: 3rem auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2),
+              inset 0 0 0 1px #e0e0e0;
+  position: relative;
+}
+
+.papirlapp h2 {
+  margin-top: 0;
+}
+
+.papirlapp ul {
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.papirlapp li {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.1rem;
+  margin: 0.4rem 0;
+}
+
+
+
+
+
+/*masse fonter*/
+@font-face {
+    font-family: "REMA";
+    src: url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY2MSwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:0f0UWQ6Ijvex9nos-IWhFuZzf-I2sr9OIhsoqZ5Ao_Y?#iefix') format('embedded-opentype'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY1NiwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:VGbUv7fpKaOyWmtyphyi1Mb9lS81AZ8LOhqZst82Sgc') format('woff'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY1NywidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:sw9nqVTJZrgkvuZjv8h28d22RA7HinBc5RqpRbMHEnU') format('woff2'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY1OCwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:rAnd6-9c9qDDxdz0a_5t4Et7xfx4SfFXT-miCXYtRuQ') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "REMA";
+    src: url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY2OSwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:GEMDmvTQcB7Nyd5goYosgH4eOglSBB0yJb82esD2AkA?#iefix') format('embedded-opentype'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY2MiwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:9kVUydZdi6T-dDWsEjqzAPZVFkdciS5zBxOpvVQcKzw') format('woff'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY2NCwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:RDTsYzBmGyZ-eogcJpAgcQw6rybEKclKyIQCwFYNwAI') format('woff2'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY2NSwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:ZtrkwBH9HG3rRi0Bj7AwcYijTQnWRxfyBJuxewNBkSw') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+@font-face {
+    font-family: "REMA";
+    src: url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY3NSwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:UVL6OqZtNKiK05VnRDw3QUDPQ2qhe26J7GyHdWbrTfI?#iefix') format('embedded-opentype'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY3MCwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:27-NcIiEwulHVqoCInZarzCzVKS_S1JGtsbE6iFeA68') format('woff'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY3MSwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:SAoNHoIM1EZrwLqL4EkXgRi0VahQNIEgPYvrdQttWek') format('woff2'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY3MiwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:BSwL7Byx09xxO3ZjC4pEeXyqSDkhAgxy3nN8nbSmSCo') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: "REMA";
+    src: url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY4MywidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:q9r17N-RRavuF0bQo5-b4TL965h_LYstz96Dk3xcP40?#iefix') format('embedded-opentype'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY3NiwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:0AAf5ZdClZU3bu95LaHge2kiuVUx3eALAEgE6ZECDgo') format('woff'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY3OCwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:GmQUhts5cS6cmk-ZObWmYeexkrokMu4TLPQ3kFJd544') format('woff2'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY3OSwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:nuXmbDWBhf6CLw8dlLYpXWfAplLaooxncoMGp7urGV0') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+@font-face {
+    font-family: "REMA Brush";
+    src: url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY4OSwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:MEr_QNxu33X7ot8YIDAOBIj8ZVyIgjj40niD5apA7GM?#iefix') format('embedded-opentype'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY4NCwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:9I48KNdOP9m8juz2lX86PfwDuHEtOt6_HZdx7kbv6RY') format('woff'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY4NSwidGltZXN0YW1wIjoiMTcyMDcwNTI4NCJ9:frontify:BdHngg4YD5nPZmyghZ7XpLlRf1bTtETQhz16153sw7Y') format('woff2'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY4NiwidGltZXN0YW1wIjoiMTcyMDcwNTI4NSJ9:frontify:oL0NZw6BLGS-TMzfxvHVMwvbFAXRZxlOJHVVMSmGfMU') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "REMA Tall";
+    src: url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY5NiwidGltZXN0YW1wIjoiMTcyMDcwNTI4NSJ9:frontify:NCvFKapgaWgWjinBLFHTQg6wM3Jg0FyQz-61gtCoqew?#iefix') format('embedded-opentype'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY5MCwidGltZXN0YW1wIjoiMTcyMDcwNTI4NSJ9:frontify:H1TA5Zb8IHnfB2HmK7eSzjGSNp_ySQAXWHmAsD0x_0I') format('woff'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY5MywidGltZXN0YW1wIjoiMTcyMDcwNTI4NSJ9:frontify:NZ9phW0UuNnWQNxmbUXfaMrgeXETNpOLxZUmVwoNdJo') format('woff2'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY5NCwidGltZXN0YW1wIjoiMTcyMDcwNTI4NSJ9:frontify:oQLwQmd2GDC3tmm5WkyAUdLNfgV42di0OTPCahWLATY') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Uniform Rounded Extra Condensed Bold";
+    src: url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjY5OSwidGltZXN0YW1wIjoiMTcyMDcwNTI4NSJ9:frontify:asv9UQe_fQiShpES_JCebG3enuN6QtffkRFMwFI1nmA') format('woff'),
+    url('https://app.frontify.com/api/screen/download/eyJpZCI6OTEyNjcwMCwidGltZXN0YW1wIjoiMTcyMDcwNTI4NSJ9:frontify:0dTr9N2SR0gm3ybVLDi2yGA1kKkqzpinGGUCGT9doQk') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}

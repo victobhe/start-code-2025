@@ -2,12 +2,13 @@
 // sortering av liste
 
 
-stederViMaaInnom = new Array();
+let stederViMaaInnom = new set();
 
-muligeKategorier = hentKategorierFraCSV();
+let muligeKategorier = hentKategorierFraCSV();
 
 
 // legg til steder vi må innom basert på handlelisten
+//x er kategori, legger også til varen i csv-filen handleliste.csv
 function leggTilStederViMaInnom(x) {
     if (!muligeKategorier.includes(x) || x == null){
         throw new Error("Ugyldig kategori");
@@ -16,6 +17,7 @@ function leggTilStederViMaInnom(x) {
         return;
     }
     stederViMaaInnom.add(x)
+    leggTilVareIFil(x)
 }
 
 // hent kategorier fra csv fil
