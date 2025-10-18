@@ -2,17 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>start-code-2025</title>
-    <script src="/src/components/djikstras.js"></script>
+    
     <link rel="stylesheet" href="../styles/rema.css">
   </head>
   <body>
     <header>
-      <h1 id="dobbel-kant">Velkommen</h1>
+      <div id ="topp">
+        <h1 id="dobbel-kant">Velkommen</h1>
+        <img src="../../src/assets/bilder/rema.png"  width="100 px" height="auto" alt="REMA 1000 logo">
+      </div>
       <h4 id="enkel-kant">Lurer du på hvor noe er i butikken? Søk opp, legg tili handlelista så gir vi deg kjappeste vei gjennom butikken</h4>
-      <img src="/src/assets/bilder/image.png" alt="">
     </header>
     <div><p></p></div>
 
@@ -20,10 +21,11 @@
       <!-- Application content will be rendered here -->
        <!--starting with input field, button  and connecting them to the javascript-->
         <input type="search" name="searchbar" id="searchbar" placeholder="Legg til i handleliste...">
+        <div id="search-results"></div>
 
 
             <!--"vare" som nå ligger inne er en placeholder for varen som blir lagt til fra sækefeltet-->
-        <button id="leggtil" onclick="leggTilStederViMaInnom()">Legg til</button>
+        <button id="leggtil" >Legg til</button>
         
         <!--selve handlelista-->
         <section class="papirlapp">
@@ -42,7 +44,8 @@
         </div>
 
       </div>
-      <script type="module" src="/src/main.js"></script>
+
+      <script type="module" src="../main.js"></script>
       <footer></footer>
   </body>
 </html>

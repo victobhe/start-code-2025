@@ -32,3 +32,11 @@ form.addEventListener('submit', function(e) {
 
 // Kjør en gang for å vise "tom liste" først
 oppdaterHandleliste();
+
+
+
+function searchByName(query) {
+  return products.filter(product =>
+    product.name.toLowerCase().includes(query.toLowerCase())
+  );
+}
