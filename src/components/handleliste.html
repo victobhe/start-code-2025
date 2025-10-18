@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>start-code-2025</title>
     <script src="/src/components/djikstras.js"></script>
     <link rel="stylesheet" href="src/styles/rema.css">
@@ -15,37 +15,32 @@
       <img src="/src/assets/bilder/image.png" alt="">
     </header>
     <div><p></p></div>
-
     <div id="app">
       <!-- Application content will be rendered here -->
        <!--starting with input field, button  and connecting them to the javascript-->
         <input type="search" name="searchbar" id="searchbar" placeholder="Legg til i handleliste...">
-
-
-        <input type="text">
-        <button onclick="oppdaterHandleliste()">test</button>
-
-
-
             <!--"vare" som nå ligger inne er en placeholder for varen som blir lagt til fra sækefeltet-->
         <button id="leggtil" onclick="leggTilStederViMaInnom()">Legg til</button>
-        
+
         <!--selve handlelista-->
         <section class="papirlapp">
           <h2>Handleliste</h2>
-            <ul id="handleliste">
-              <!--Her kommer varene som blir lagt til fra søkefeltet-->
+            <ul>
+              <li>Brød</li>
+              <li>Melk</li>
+              <li>Snacks</li>
             </ul>
         </section>
-  
+
         <!--Her er en knapp som skal trykkes påav bruker når handleliste er ferdig og beregniger skal skje, bruker tar da til en kart.html for bilde av kartet-->
         <div class="container-submit">
-          <a href="./src/components/index.html">
-            <button type="submit">Til verks!</button>
-          </a>
+          <button type="submit">Til verks!</button>
 
         </div>
 
+
+    </div>
+    <script type="module" src="/src/main.js"></script>
       </div>
       <script type="module" src="/src/main.js"></script>
       <footer></footer>
