@@ -242,7 +242,7 @@ function animateTrail(path) {
   const totalDist = totalPathDistance(smoothed);
   let progress = 0;
   const drawSpeed = 12;
-  let fadingOut = false;
+  let fadingOut = false;1
   let fadeAlpha = 1.0;
 
   function step() {
