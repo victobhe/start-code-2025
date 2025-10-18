@@ -1,6 +1,6 @@
-/* ===========================================================
-   📦 CORE CANVAS + STATE SETUP
-   =========================================================== */
+// ======================
+// --- Canvas Setup ---
+// ======================
 const canvas = document.getElementById('map');
 const ctx = canvas.getContext('2d');
 const img = new Image();
@@ -8,12 +8,9 @@ img.src = 'storeMap.png';
 
 let selectedCats = [];
 
-
-/* ===========================================================
-   📍 MAP DATA (Nodes & Connections)
-   =========================================================== */
-
-// --- Inline nodes data ---
+// ======================
+// --- Inline Nodes ---
+// ======================
 const nodes = [
   { "id": "B1", "x": 88, "y": 621, "type": "path" },
   { "id": "B2", "x": 88, "y": 400, "type": "path" },
@@ -25,10 +22,10 @@ const nodes = [
   { "id": "B8", "x": 657, "y": 561, "type": "path" },
   { "id": "B9", "x": 657, "y": 706, "type": "path" },
   { "id": "B10", "x": 771, "y": 706, "type": "path" },
-  { "id": "B11", "x": 771, "y": 501, "type": "path" },
+  { "id": "B11", "x": 771, "y": 501, "type": "path" }, // kjøtt left side
   { "id": "snacks", "x": 771, "y": 271, "type": "path" },
   { "id": "B13", "x": 941, "y": 296, "type": "path" },
-  { "id": "kjøtt", "x": 941, "y": 501, "type": "path" },
+  { "id": "kjøtt_R", "x": 941, "y": 501, "type": "path" }, // kjøtt right side
   { "id": "B15", "x": 938, "y": 706, "type": "path" },
   { "id": "B16", "x": 1111, "y": 706, "type": "path" },
   { "id": "B17", "x": 1111, "y": 271, "type": "path" },
@@ -45,7 +42,9 @@ const nodes = [
   { "id": "R1", "x": 527, "y": 151, "type": "checkout", "label": "cashier" }
 ];
 
-// --- Predefined connections between nodes ---
+// ======================
+// --- Connections ---
+// ======================
 const nodeConnections = {
   "B1": ["B2"],
   "B2": ["B1", "B3"],
@@ -57,11 +56,11 @@ const nodeConnections = {
   "B8": ["B7", "B9", "B11", "frukt"],
   "B9": ["B8", "B10", "grønt"],
   "B10": ["B9", "B11", "B15"],
-  "B11": ["B7", "B10", "snacks"],
+  "B11": ["B7", "B8", "B10", "snacks"], // unchanged
   "snacks": ["B11", "B13", "B23", "B7", "B21", "brød"],
-  "B13": ["kjøtt", "brød", "B17", "B19"],
-  "kjøtt": ["B13", "B15"],
-  "B15": ["B10", "kjøtt", "B16"],
+  "B13": ["kjøtt_R", "brød", "B17", "B19"],
+  "kjøtt_R": ["B13", "B15"], // independent, not connected to B11
+  "B15": ["B10", "kjøtt_R", "B16"],
   "B16": ["B15", "baking"],
   "B17": ["B13", "brød", "B19", "baking"],
   "brød": ["B13", "B17", "B19"],
@@ -77,10 +76,18 @@ const nodeConnections = {
   "R1": ["B22", "B23"]
 };
 
+// ======================
+// --- Category Aliases ---
+// ======================
+const categoryAliases = {
+  kjøtt: ["kjøtt_R", "B11"],
+  baking: ["baking","kjøtt_R"],
+  frukt: ["frukt", "B6"]
+};
 
-/* ===========================================================
-   🧭 UI HANDLERS (Sidebar + Button)
-   =========================================================== */
+// ======================
+// --- UI Controls ---
+// ======================
 document.querySelectorAll('#sidebar input[type=checkbox]').forEach(cb => {
   cb.addEventListener('change', e => {
     if (e.target.checked) selectedCats.push(e.target.value);
@@ -94,10 +101,9 @@ document.getElementById('routeBtn').addEventListener('click', () => {
   drawMap(path);
 });
 
-
-/* ===========================================================
-   🧮 UTILITY + GRAPH FUNCTIONS
-   =========================================================== */
+// ======================
+// --- Utility Functions ---
+// ======================
 function distance(a, b) {
   return Math.hypot(a.x - b.x, a.y - b.y);
 }
@@ -113,7 +119,6 @@ function buildGraph() {
       if (b) graph[id].push({ id: cid, cost: distance(a, b) });
     }
   }
-  // make bidirectional
   for (const [id, conns] of Object.entries(graph)) {
     for (const edge of conns) {
       if (!graph[edge.id].some(e => e.id === id)) {
@@ -169,46 +174,64 @@ function permute(arr) {
   return res;
 }
 
-
-/* ===========================================================
-   🧠 ROUTE COMPUTATION
-   =========================================================== */
+// ======================
+// --- Route Computation ---
+// ======================
 function computeShortestRoute(selected) {
   const graph = buildGraph();
   const entrance = nodes.find(n => n.id === "B1");
   const checkout = nodes.find(n => n.id === "R1");
-  const categoryNodes = selected.map(cat => nodes.find(n => n.id === cat)).filter(Boolean);
 
-  if (!categoryNodes.length) {
+  // Expand selected categories into groups of alias node IDs
+  const categoryGroups = selected.map(cat => {
+    const ids = categoryAliases[cat] || [cat];
+    return ids.map(id => nodes.find(n => n.id === id)).filter(Boolean);
+  }).filter(g => g.length);
+
+  if (!categoryGroups.length) {
     alert("Select at least one category!");
     return [];
   }
 
-  const orders = permute(categoryNodes);
+  // Try every order of category groups (not individual nodes)
+  const orders = permute(categoryGroups);
   let bestPath = [], bestDist = Infinity;
 
   for (const order of orders) {
     let current = entrance;
     let fullPath = [entrance];
-    for (const c of order) {
-      const seg = dijkstra(graph, current.id, c.id);
-      if (seg.length > 1) seg.shift();
-      fullPath = fullPath.concat(seg.map(id => nodes.find(n => n.id === id)));
-      current = c;
+    for (const group of order) {
+      // Choose the closest node within this category group
+      let bestGroupNode = null;
+      let bestSubPath = [];
+      let bestSubDist = Infinity;
+      for (const candidate of group) {
+        const seg = dijkstra(graph, current.id, candidate.id);
+        const dist = pathLength(seg);
+        if (dist < bestSubDist) {
+          bestSubDist = dist;
+          bestGroupNode = candidate;
+          bestSubPath = seg;
+        }
+      }
+      if (bestSubPath.length > 1) bestSubPath.shift();
+      fullPath = fullPath.concat(bestSubPath.map(id => nodes.find(n => n.id === id)));
+      current = bestGroupNode;
     }
+    // Finally, go to checkout
     const toCheckout = dijkstra(graph, current.id, checkout.id);
     if (toCheckout.length > 1) toCheckout.shift();
     fullPath = fullPath.concat(toCheckout.map(id => nodes.find(n => n.id === id)));
+
     const dist = pathLength(fullPath.map(n => n.id));
     if (dist < bestDist) { bestDist = dist; bestPath = fullPath; }
   }
+
   return bestPath;
 }
 
 
-/* ===========================================================
-   🎨 DRAWING FUNCTIONS
-   =========================================================== */
+// --- Drawing functions ---
 function drawMap(path = []) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -236,13 +259,11 @@ function drawStaticMap() {
       ctx.stroke();
     }
   }
-
   // Path nodes
   ctx.fillStyle = '#023EA5';
   for (const n of nodes.filter(n => n.type === 'path')) {
     ctx.beginPath(); ctx.arc(n.x, n.y, 4, 0, Math.PI * 2); ctx.fill();
   }
-
   // Labels
   ctx.fillStyle = '#023EA5';
   ctx.font = '12px sans-serif';
@@ -250,17 +271,13 @@ function drawStaticMap() {
   for (const n of nodes.filter(n => n.type === 'path')) {
     ctx.fillText(n.id, n.x, n.y - 10);
   }
-
   // Checkout
   const chk = nodes.find(n => n.type === 'checkout');
   ctx.fillStyle = '#FF1500';
   ctx.beginPath(); ctx.arc(chk.x, chk.y, 10, 0, Math.PI * 2); ctx.fill();
 }
 
-
-/* ===========================================================
-   🌀 ANIMATION SYSTEM (Trail + Flag)
-   =========================================================== */
+// --- Animated treasure trail ---
 function animateTrail(path) {
   const smoothed = smoothPath(path, 8);
   const totalDist = totalPathDistance(smoothed);
@@ -368,10 +385,7 @@ function animateTrail(path) {
   step();
 }
 
-
-/* ===========================================================
-   🧩 ANIMATION HELPERS (Spline + Distance)
-   =========================================================== */
+// --- Helper: create smooth Catmull-Rom spline interpolation ---
 function smoothPath(points, resolution = 10) {
   if (points.length < 3) return points;
   const result = [];
@@ -398,17 +412,42 @@ function smoothPath(points, resolution = 10) {
   return result;
 }
 
+// --- Helper: create smooth Catmull-Rom spline interpolation ---
+function smoothPath(points, resolution = 10) {
+  if (points.length < 3) return points;
+  const result = [];
+  for (let i = -1; i < points.length - 2; i++) {
+    const p0 = points[Math.max(i, 0)];
+    const p1 = points[i + 1];
+    const p2 = points[i + 2];
+    const p3 = points[Math.min(i + 3, points.length - 1)];
+
+    for (let t = 0; t <= 1; t += 1 / resolution) {
+      const tt = t * t;
+      const ttt = tt * t;
+
+      const q1 = -ttt + 2 * tt - t;
+      const q2 = 3 * ttt - 5 * tt + 2;
+      const q3 = -3 * ttt + 4 * tt + t;
+      const q4 = ttt - tt;
+
+      const x = 0.5 * (p0.x * q1 + p1.x * q2 + p2.x * q3 + p3.x * q4);
+      const y = 0.5 * (p0.y * q1 + p1.y * q2 + p2.y * q3 + p3.y * q4);
+      result.push({ x, y });
+    }
+  }
+  return result;
+}
+
+
 function totalPathDistance(path) {
   let sum = 0;
   for (let i = 0; i < path.length - 1; i++)
     sum += distance(path[i], path[i + 1]);
   return sum;
 }
-
-
-/* ===========================================================
-   🚩 FLAG HOIST ANIMATION
-   =========================================================== */
+// --- Flag hoist animation (smooth fade/raise) ---
+// --- Flag hoist animation (flag raises smoothly, trail remains visible) ---
 function hoistFlag(endpoint, drawTrail) {
   const flagWidth = 26;
   const flagHeight = 18;
@@ -487,3 +526,5 @@ function hoistFlag(endpoint, drawTrail) {
 
   drawFrame();
 }
+
+
