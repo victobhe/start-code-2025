@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/victobhe/start-code-2025#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "openai": "^6.4.0"
   }
-  
 }
