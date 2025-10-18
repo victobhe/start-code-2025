@@ -1,9 +1,17 @@
+/* ===========================================================
+   📦 CORE CANVAS + STATE SETUP
+   =========================================================== */
 const canvas = document.getElementById('map');
 const ctx = canvas.getContext('2d');
 const img = new Image();
 img.src = 'storeMap.png';
 
 let selectedCats = [];
+
+
+/* ===========================================================
+   📍 MAP DATA (Nodes & Connections)
+   =========================================================== */
 
 // --- Inline nodes data ---
 const nodes = [
@@ -69,7 +77,10 @@ const nodeConnections = {
   "R1": ["B22", "B23"]
 };
 
-// --- UI ---
+
+/* ===========================================================
+   🧭 UI HANDLERS (Sidebar + Button)
+   =========================================================== */
 document.querySelectorAll('#sidebar input[type=checkbox]').forEach(cb => {
   cb.addEventListener('change', e => {
     if (e.target.checked) selectedCats.push(e.target.value);
@@ -83,7 +94,10 @@ document.getElementById('routeBtn').addEventListener('click', () => {
   drawMap(path);
 });
 
-// --- Utility functions ---
+
+/* ===========================================================
+   🧮 UTILITY + GRAPH FUNCTIONS
+   =========================================================== */
 function distance(a, b) {
   return Math.hypot(a.x - b.x, a.y - b.y);
 }
@@ -155,7 +169,10 @@ function permute(arr) {
   return res;
 }
 
-// --- Route computation ---
+
+/* ===========================================================
+   🧠 ROUTE COMPUTATION
+   =========================================================== */
 function computeShortestRoute(selected) {
   const graph = buildGraph();
   const entrance = nodes.find(n => n.id === "B1");
@@ -188,7 +205,10 @@ function computeShortestRoute(selected) {
   return bestPath;
 }
 
-// --- Drawing functions ---
+
+/* ===========================================================
+   🎨 DRAWING FUNCTIONS
+   =========================================================== */
 function drawMap(path = []) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -216,11 +236,13 @@ function drawStaticMap() {
       ctx.stroke();
     }
   }
+
   // Path nodes
   ctx.fillStyle = '#023EA5';
   for (const n of nodes.filter(n => n.type === 'path')) {
     ctx.beginPath(); ctx.arc(n.x, n.y, 4, 0, Math.PI * 2); ctx.fill();
   }
+
   // Labels
   ctx.fillStyle = '#023EA5';
   ctx.font = '12px sans-serif';
@@ -228,29 +250,46 @@ function drawStaticMap() {
   for (const n of nodes.filter(n => n.type === 'path')) {
     ctx.fillText(n.id, n.x, n.y - 10);
   }
+
   // Checkout
   const chk = nodes.find(n => n.type === 'checkout');
   ctx.fillStyle = '#FF1500';
   ctx.beginPath(); ctx.arc(chk.x, chk.y, 10, 0, Math.PI * 2); ctx.fill();
 }
 
-// --- Animated treasure trail ---
-// --- Animated treasure trail with smooth curve + human wiggle ---
-// --- Animated treasure trail with smooth curved path (no dot wiggle) ---
+
+/* ===========================================================
+   🌀 ANIMATION SYSTEM (Trail + Flag)
+   =========================================================== */
 function animateTrail(path) {
-  const smoothed = smoothPath(path, 8); // interpolate for curved motion
+  const smoothed = smoothPath(path, 8);
   const totalDist = totalPathDistance(smoothed);
   let progress = 0;
-  const drawSpeed = 12;
-  let fadingOut = false;1
+  const drawSpeed = 8;
+  let fadingOut = false;
   let fadeAlpha = 1.0;
 
+  // Helper: draw the full red dashed trail
+  function drawTrail() {
+    ctx.strokeStyle = '#D71F2E';
+    ctx.setLineDash([10, 8]);
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    ctx.moveTo(smoothed[0].x, smoothed[0].y);
+    for (let i = 1; i < smoothed.length; i++) ctx.lineTo(smoothed[i].x, smoothed[i].y);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // --- Main animation loop ---
   function step() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     drawStaticMap();
 
-    // Draw red dashed trail (smooth)
+    // Draw partially completed dashed trail
     ctx.strokeStyle = '#D71F2E';
     ctx.setLineDash([10, 8]);
     ctx.lineWidth = 4;
@@ -280,7 +319,7 @@ function animateTrail(path) {
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // Draw moving dot (dark gray) following the smooth curve
+    // Draw moving dark gray dot
     if (progress < totalDist) {
       ctx.globalAlpha = fadeAlpha;
       ctx.fillStyle = '#373432';
@@ -300,24 +339,15 @@ function animateTrail(path) {
     }
   }
 
-  // Smooth fade-out for final dot
+  // --- Fading out the final dot while preserving trail ---
   function fadeDot(x, y) {
     fadeAlpha -= 0.05;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    drawStaticMap();
+    drawTrail();
+
     if (fadeAlpha > 0) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      drawStaticMap();
-
-      // Final full curved path
-      ctx.strokeStyle = '#D71F2E';
-      ctx.setLineDash([10, 8]);
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      ctx.moveTo(smoothed[0].x, smoothed[0].y);
-      for (let i = 1; i < smoothed.length; i++) ctx.lineTo(smoothed[i].x, smoothed[i].y);
-      ctx.stroke();
-      ctx.setLineDash([]);
-
       ctx.globalAlpha = fadeAlpha;
       ctx.fillStyle = '#373432';
       ctx.beginPath();
@@ -326,22 +356,22 @@ function animateTrail(path) {
       ctx.globalAlpha = 1;
       requestAnimationFrame(() => fadeDot(x, y));
     } else {
+      // Once dot fades completely → draw static map & trail & hoist flag
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       drawStaticMap();
-      ctx.strokeStyle = '#D71F2E';
-      ctx.setLineDash([10, 8]);
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      ctx.moveTo(smoothed[0].x, smoothed[0].y);
-      for (let i = 1; i < smoothed.length; i++) ctx.lineTo(smoothed[i].x, smoothed[i].y);
-      ctx.stroke();
-      ctx.setLineDash([]);
+      drawTrail();
+      hoistFlag(smoothed[smoothed.length - 1], drawTrail);
     }
   }
 
   step();
 }
 
-// --- Helper: create smooth Catmull-Rom spline interpolation ---
+
+/* ===========================================================
+   🧩 ANIMATION HELPERS (Spline + Distance)
+   =========================================================== */
 function smoothPath(points, resolution = 10) {
   if (points.length < 3) return points;
   const result = [];
@@ -367,39 +397,93 @@ function smoothPath(points, resolution = 10) {
   }
   return result;
 }
-
-
-// --- Helper: create smooth Catmull-Rom spline interpolation ---
-function smoothPath(points, resolution = 10) {
-  if (points.length < 3) return points;
-  const result = [];
-  for (let i = -1; i < points.length - 2; i++) {
-    const p0 = points[Math.max(i, 0)];
-    const p1 = points[i + 1];
-    const p2 = points[i + 2];
-    const p3 = points[Math.min(i + 3, points.length - 1)];
-
-    for (let t = 0; t <= 1; t += 1 / resolution) {
-      const tt = t * t;
-      const ttt = tt * t;
-
-      const q1 = -ttt + 2 * tt - t;
-      const q2 = 3 * ttt - 5 * tt + 2;
-      const q3 = -3 * ttt + 4 * tt + t;
-      const q4 = ttt - tt;
-
-      const x = 0.5 * (p0.x * q1 + p1.x * q2 + p2.x * q3 + p3.x * q4);
-      const y = 0.5 * (p0.y * q1 + p1.y * q2 + p2.y * q3 + p3.y * q4);
-      result.push({ x, y });
-    }
-  }
-  return result;
-}
-
 
 function totalPathDistance(path) {
   let sum = 0;
   for (let i = 0; i < path.length - 1; i++)
     sum += distance(path[i], path[i + 1]);
   return sum;
+}
+
+
+/* ===========================================================
+   🚩 FLAG HOIST ANIMATION
+   =========================================================== */
+function hoistFlag(endpoint, drawTrail) {
+  const flagWidth = 26;
+  const flagHeight = 18;
+  const poleHeight = flagHeight * 1.6;
+  const squareSize = 6;
+  let frame = 0;
+  const duration = 40; // frames (~0.6s)
+
+  function drawFrame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    drawStaticMap();
+    if (drawTrail) drawTrail(); // keep trail visible
+
+    const progress = Math.min(frame / duration, 1);
+    const lift = (1 - progress) * 30; // start lower, rise upward
+    const alpha = progress;
+
+    ctx.globalAlpha = alpha;
+
+    // Draw pole
+    ctx.strokeStyle = '#373432';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(endpoint.x, endpoint.y);
+    ctx.lineTo(endpoint.x, endpoint.y - poleHeight + lift);
+    ctx.stroke();
+
+    // Draw checkered flag
+    const flagTopY = endpoint.y - poleHeight + 4 + lift;
+    const flagLeftX = endpoint.x + 4;
+
+    for (let i = 0; i < flagHeight / squareSize; i++) {
+      for (let j = 0; j < flagWidth / squareSize; j++) {
+        ctx.fillStyle = (i + j) % 2 === 0 ? '#000' : '#FFF';
+        ctx.fillRect(flagLeftX + j * squareSize, flagTopY + i * squareSize, squareSize, squareSize);
+      }
+    }
+
+    // Outline
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(flagLeftX, flagTopY, flagWidth, flagHeight);
+    ctx.globalAlpha = 1;
+
+    frame++;
+    if (progress < 1) {
+      requestAnimationFrame(drawFrame);
+    } else {
+      // Final static frame (fully raised flag, full opacity)
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      drawStaticMap();
+      if (drawTrail) drawTrail();
+
+      ctx.strokeStyle = '#373432';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(endpoint.x, endpoint.y);
+      ctx.lineTo(endpoint.x, endpoint.y - poleHeight);
+      ctx.stroke();
+
+      const finalTopY = endpoint.y - poleHeight + 4;
+      const finalLeftX = endpoint.x + 4;
+      for (let i = 0; i < flagHeight / squareSize; i++) {
+        for (let j = 0; j < flagWidth / squareSize; j++) {
+          ctx.fillStyle = (i + j) % 2 === 0 ? '#000' : '#FFF';
+          ctx.fillRect(finalLeftX + j * squareSize, finalTopY + i * squareSize, squareSize, squareSize);
+        }
+      }
+      ctx.strokeStyle = '#000';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(finalLeftX, finalTopY, flagWidth, flagHeight);
+    }
+  }
+
+  drawFrame();
 }
