@@ -19,22 +19,29 @@
       <!-- Application content will be rendered here -->
        <!--starting with input field, button  and connecting them to the javascript-->
         <input type="search" name="searchbar" id="searchbar" placeholder="Legg til i handleliste...">
+
+
+        <input type="text">
+        <button onclick="oppdaterHandleliste()">test</button>
+
+
+
             <!--"vare" som nå ligger inne er en placeholder for varen som blir lagt til fra sækefeltet-->
         <button id="leggtil" onclick="leggTilStederViMaInnom()">Legg til</button>
         
         <!--selve handlelista-->
         <section class="papirlapp">
           <h2>Handleliste</h2>
-            <ul>
-              <li>Brød</li>
-              <li>Melk</li>
-              <li>Snacks</li>
+            <ul id="handleliste">
+              <!--Her kommer varene som blir lagt til fra søkefeltet-->
             </ul>
         </section>
-        
+  
         <!--Her er en knapp som skal trykkes påav bruker når handleliste er ferdig og beregniger skal skje, bruker tar da til en kart.html for bilde av kartet-->
         <div class="container-submit">
-          <button type="submit">Til verks!</button>
+          <a href="./src/components/kart.html">
+            <button type="submit">Til verks!</button>
+          </a>
 
         </div>
 
